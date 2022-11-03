@@ -8,8 +8,6 @@ import { useState } from 'react';
 function App() {
   const [authen, setAuthen] = useState(false);
 
-  
-
   return (
     <div>
       <Navbar authen={authen} setAuthen={setAuthen} />

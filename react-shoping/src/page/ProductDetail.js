@@ -4,7 +4,7 @@ import { Container, Row, Col, Dropdown, Button } from 'react-bootstrap';
 
 const ProductDetail = () => {
     let { id } = useParams();
-    const [products, setProducts] = useState();
+    let [products, setProducts] = useState();
 
     useEffect(() => {
         getProductDetail();
@@ -34,9 +34,10 @@ const ProductDetail = () => {
                             사이즈 선택
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
-                            <Dropdown.Item href="#/1">S</Dropdown.Item>
-                            <Dropdown.Item href="#/2">M</Dropdown.Item>
-                            <Dropdown.Item href="#/3">L</Dropdown.Item>
+                            {products?.size.length > 0 &&
+                                products.size.map((item) => (
+                                    <Dropdown.Item href={`#/${item}`}>{item}</Dropdown.Item>
+                                ))}
                         </Dropdown.Menu>
                     </Dropdown>
                     <Button variant="dark" className='add-button'>추가</Button>

@@ -1,34 +1,61 @@
 import React, { useEffect, useState } from 'react';
 import ProductCard from '../components/ProductCard';
-import { Container, Row, Col } from 'react-bootstrap';
-
+import { Container, Row, Col, Alert } from 'react-bootstrap';
+import { useSearchParams } from 'react-router-dom';
 
 const ProductAll = () => {
-    const [productList, setProductList] = useState([]);
+    let [query, setQuery] = useSearchParams('');
+    let [productList, setProductList] = useState([]);
+    let [error, setError] = useState("");
+
 
     useEffect(() => {
         getProduct();
-    }, [])
+    }, [query])
 
     const getProduct = async () => {
-        let url = `https://my-json-server.typicode.com/leebee2/Json_DB/products`;
-        let response = await fetch(url);
-        let data = await response.json();
-        setProductList(data);
+        try {
+            if (error != '')
+                setError('');
+
+            let keyword = query.get('q') || "";
+            let url = `https://my-json-server.typicode.com/leebee2/Json_DB/products?q=${keyword}`;
+            let response = await fetch(url);
+            let data = await response.json();
+
+            if (data.length < 1) {
+                if (keyword !== "") {
+                    setError(`${keyword}와 일치하는 상품이 없습니다`);
+                } else {
+                    throw new Error("결과가 없습니다");
+                }
+            }
+            setProductList(data);
+
+        } catch (err) {
+            setError(err.message);
+        }
     }
 
     return (
-        <div>
-            <Container>
+        <Container>
+            {error ? (
+                <Alert variant="danger" className="text-center">
+                    {error}
+                </Alert>
+            ) : <Container>
                 <Row>
-                    {
-                        productList.map((menu,index) => (
-                            <Col key={index} lg={3}> <ProductCard item={menu} /></Col>
+                    {productList.length > 0
+                        && productList.map((item) => (
+                            <Col key={item.id} md={3} sm={12}>
+                                <ProductCard item={item} />
+                            </Col>
                         ))
                     }
                 </Row>
             </Container>
-        </div>
+            }
+        </Container>
     );
 };
 
