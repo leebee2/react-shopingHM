@@ -1,16 +1,22 @@
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
 import { ProductAll, ProductDetail, Login } from './page/index';
+import PrivateRoute from './route/PrivateRoute';
 import Navbar from './components/Navbar';
+import { useState } from 'react';
 
 function App() {
+  const [authen, setAuthen] = useState(false);
+
+  
+
   return (
     <div>
-      <Navbar/>
+      <Navbar authen={authen} setAuthen={setAuthen} />
       <Routes>
-        <Route path='/product' element={<ProductAll />} />
-        <Route path='/product/:id' element={<ProductDetail />} />
-        <Route path='/login' element={<Login />} />
+        <Route path='/' element={<ProductAll />} />
+        <Route path='/product/:id' element={<PrivateRoute authen={authen} />} />
+        <Route path='/login' element={<Login setAuthen={setAuthen} />} />
       </Routes>
     </div>
   );
