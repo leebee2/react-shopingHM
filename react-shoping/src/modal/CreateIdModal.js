@@ -13,13 +13,25 @@ const CreateIdModal = (props) => {
         e.preventDefault();
 
         if (createEmail && createPassword) {
-            createUser();
+            userCountCheck();
         }
     }
 
-    const createUser = async () => {
-        let userData = { email: createEmail, password: '$2a$10$uT0E.SM7RvUvwC3OKzgcHOFOSCW2fV9d4bBcYpdacgNsoOjwnP0GG', id : 2 };
-        let url = `https://my-json-server.typicode.com/leebee2/react-shopingHM/register`;
+    const userCountCheck = async () => {
+        try {
+            let url = `http://localhost:8000/users`;
+            let response = await fetch(url);
+            let data = await response.json();
+
+            createUser(data.length + 1);
+        } catch {
+            
+        }
+    }
+
+    const createUser = async (id) => {
+        let userData = { email: createEmail, password: createPassword, id : id };
+        let url = `http://localhost:8000/register`;
         
         try {
             const config = {
@@ -29,7 +41,6 @@ const CreateIdModal = (props) => {
                 },
                 body: JSON.stringify(userData)
             };
-
 
             const response = await fetch(url, config);
             const data = await response.json();
