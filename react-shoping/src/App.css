@@ -158,3 +158,34 @@
     background-color: beige;
     border-radius: 3px;
 }
+
+
+.create_btn {
+    margin-left: 10px;
+}
+
+.modal_header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    justify-content: space-between;
+}
+
+.modal_header_text {
+    font-size: 11px;
+    text-align: center;
+}
+
+
+.mb-3 {
+    font-size: 11px;
+}
+
+.mb-3 span {
+    color : red;
+}
+
+.modal_create_btn {
+    background-color : rgb(200, 76, 76);
+    width: 100%;
+}

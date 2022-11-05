@@ -2,7 +2,7 @@
   "name": "react-shoping",
   "version": "0.1.0",
   "private": true,
-  "homepage" : "https://leebee2.github.io/react-shopingHM/",
+  "homepage": "https://leebee2.github.io/react-shopingHM/",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.2.0",
     "@fortawesome/free-regular-svg-icons": "^6.2.0",
@@ -11,6 +11,7 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "axios": "^1.1.3",
     "bootstrap": "^5.2.2",
     "json-server": "^0.17.0",
     "react": "^18.2.0",
@@ -26,7 +27,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "server": "json-server-auth --watch db.json --port 4444"
   },
   "eslintConfig": {
     "extends": [
@@ -47,6 +49,7 @@
     ]
   },
   "devDependencies": {
-    "gh-pages": "^4.0.0"
+    "gh-pages": "^4.0.0",
+    "json-server-auth": "^2.1.0"
   }
 }
