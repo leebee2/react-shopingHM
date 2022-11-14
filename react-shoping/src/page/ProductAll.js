@@ -1,40 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import ProductCard from '../components/ProductCard';
 import { Container, Row, Col, Alert } from 'react-bootstrap';
 import { useSearchParams } from 'react-router-dom';
+import { productAction } from '../redux/actions/productAction';
+import { useDispatch, useSelector } from 'react-redux';
 
 const ProductAll = () => {
+    let dispatch = useDispatch();
     let [query, setQuery] = useSearchParams('');
-    let [productList, setProductList] = useState([]);
-    let [error, setError] = useState("");
-
+    let productList = useSelector(state => state.product.productList);
+    let error = useSelector(state => state.product.producList_ErrorMSG);
 
     useEffect(() => {
         getProduct();
     }, [query])
 
-    const getProduct = async () => {
-        try {
-            if (error != '')
-                setError('');
-
-            let keyword = query.get('q') || "";
-            let url = `https://my-json-server.typicode.com/leebee2/Json_DB/products?q=${keyword}`;
-            let response = await fetch(url);
-            let data = await response.json();
-
-            if (data.length < 1) {
-                if (keyword !== "") {
-                    setError(`${keyword}와 일치하는 상품이 없습니다`);
-                } else {
-                    throw new Error("결과가 없습니다");
-                }
-            }
-            setProductList(data);
-
-        } catch (err) {
-            setError(err.message);
-        }
+    const getProduct = () => {
+        let keyword = query.get('q') || "";
+        
+        //미들웨어를 거쳐서 보내기
+        dispatch(productAction.getProducts(error, keyword))
     }
 
     return (

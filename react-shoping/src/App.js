@@ -1,20 +1,20 @@
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
-import { ProductAll, ProductDetail, Login } from './page/index';
+import { ProductAll, Login } from './page/index';
 import PrivateRoute from './route/PrivateRoute';
 import Navbar from './components/Navbar';
-import { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 function App() {
-  const [authen, setAuthen] = useState(false);
+  const authen = useSelector(state => state.auth.authenFlag);
 
   return (
     <div>
-      <Navbar authen={authen} setAuthen={setAuthen} />
+      <Navbar/>
       <Routes>
         <Route path='/' element={<ProductAll />} />
         <Route path='/product/:id' element={<PrivateRoute authen={authen} />} />
-        <Route path='/login' element={<Login setAuthen={setAuthen} />} />
+        <Route path='/login' element={<Login/>} />
       </Routes>
     </div>
   );

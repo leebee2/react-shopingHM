@@ -3,9 +3,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser } from '@fortawesome/free-regular-svg-icons'
 import { faSearch, faBars } from '@fortawesome/free-solid-svg-icons'
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 
-const Navbar = ({ authen, setAuthen }) => {
+const Navbar = () => {
+    let dispatch = useDispatch();
+    let authen = useSelector(state => state.auth.authenFlag);
     const menulist = ['여성', 'Divided', '남성', '신생아/유아', '아동', 'H&M Home', 'Sale', '지속가능성'];
     let nav = useNavigate();
     let [width, setWidth] = useState(0);
@@ -13,7 +16,7 @@ const Navbar = ({ authen, setAuthen }) => {
 
     const handleAuthen = () => {
         if (authen)
-            setAuthen(false);
+            dispatch({type : 'ROGOUT'})
         else
             nav('/login');
     }

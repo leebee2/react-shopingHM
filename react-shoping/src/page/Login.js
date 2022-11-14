@@ -1,21 +1,23 @@
 import React, { useState } from 'react';
 import { Button, Form, Container } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { authenticateAction } from '../redux/actions/authenticateAction';
 import CreateIdModal from '../modal/CreateIdModal';
 
-const Login = ({ setAuthen }) => {
-    const [userEmail, setUserEmail] = useState('');
-    const [userPassword, setUserPassword] = useState('');
-    const [modalShow, setModalShow] = useState(false);
-
+const Login = () => {
+    const dispatch = useDispatch();
     const nav = useNavigate();
+
+    let [userEmail, setUserEmail] = useState('');
+    let [userPassword, setUserPassword] = useState('');
+    let [modalShow, setModalShow] = useState(false);
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        //값 여부 체크
         if (!(!userEmail || !userPassword)) {
-            setAuthen(true);
+            dispatch(authenticateAction.login(userEmail, userPassword))
             nav('/');
         }
     }
